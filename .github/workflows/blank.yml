@@ -38,6 +38,7 @@ jobs:
         sudo systemctl start nginx
         sudo systemctl status nginx
         sudo mkdir -p /home/ubuntu/mansukh
+        ls -l
 
     - name: Install Docker
       run: |
