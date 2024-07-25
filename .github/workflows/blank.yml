@@ -29,16 +29,35 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
+    # - name: Deploy to EC2
+    #   run: |
+    #     ssh -i ${{ secrets.SSH_PRIVATE_KEY }} ubuntu@75.101.248.231
+    #     sudo su
+    #     sudo netstat -tupln
+    #     sudo apt update && sudo apt install nginx -y
+    #     sudo systemctl start nginx
+    #     sudo systemctl status nginx
+    #     sudo mkdir -p /home/ubuntu/mansukh
+    #     ls -l
     - name: Deploy to EC2
       run: |
-        ssh -i ${{ secrets.SSH_PRIVATE_KEY }} ubuntu@75.101.248.231
-        sudo su
-        sudo netstat -tupln
-        sudo apt update && sudo apt install nginx -y
-        sudo systemctl start nginx
-        sudo systemctl status nginx
-        sudo mkdir -p /home/ubuntu/mansukh
-        ls -l
+           # Save the private key to a file
+           echo "${{ secrets.SSH_PRIVATE_KEY }}" > id_rsa
+           chmod 600 id_rsa
+
+           # Add the remote server to known hosts to prevent interactive confirmation
+           ssh-keyscan -H 75.101.248.231 >> ~/.ssh/known_hosts
+
+           # Execute commands on the EC2 instance
+           ssh -i id_rsa ubuntu@75.101.248.231 << 'EOF'
+             sudo su
+             sudo netstat -tupln
+             sudo apt update && sudo apt install nginx -y
+             sudo systemctl start nginx
+             sudo systemctl status nginx
+             sudo mkdir -p /home/ubuntu/mansukh
+             ls -l
+           EOF
 
     - name: Install Docker
       run: |
