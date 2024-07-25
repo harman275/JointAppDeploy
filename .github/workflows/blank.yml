@@ -29,16 +29,6 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-    # - name: Deploy to EC2
-    #   run: |
-    #     ssh -i ${{ secrets.SSH_PRIVATE_KEY }} ubuntu@75.101.248.231
-    #     sudo su
-    #     sudo netstat -tupln
-    #     sudo apt update && sudo apt install nginx -y
-    #     sudo systemctl start nginx
-    #     sudo systemctl status nginx
-    #     sudo mkdir -p /home/ubuntu/mansukh
-    #     ls -l
     - name: Deploy to EC2
       run: |
            # Save the private key to a file
@@ -56,23 +46,31 @@ jobs:
              sudo systemctl start nginx
              sudo systemctl status nginx
              sudo mkdir -p /home/ubuntu/mansukh
-             ls -l
+             sudo apt install apt-transport-https ca-certificates curl software-properties-common
+             curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+             sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+             apt-cache policy docker-ce
+             sudo apt install docker-ce
+             sudo systemctl start docker
+             sudo systemctl status docker
+             sudo netstat -tupln
+             sudo docker --version
            EOF
 
-    - name: Install Docker
-      run: |
-        sudo apt update
-        sudo apt install apt-transport-https ca-certificates curl software-properties-common
-        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-        sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
-        apt-cache policy docker-ce
-        sudo apt install docker-ce
-        sudo systemctl start docker
-        sudo systemctl status docker
-        sudo netstat -tupln
-        sudo docker --version
-        # sudo docker run --name sukhtest nginx
-        # sudo docker ps -a 
+    # - name: Install Docker
+    #   run: |
+    #     sudo apt update
+    #     sudo apt install apt-transport-https ca-certificates curl software-properties-common
+    #     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    #     sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+    #     apt-cache policy docker-ce
+    #     sudo apt install docker-ce
+    #     sudo systemctl start docker
+    #     sudo systemctl status docker
+    #     sudo netstat -tupln
+    #     sudo docker --version
+    #     # sudo docker run --name sukhtest nginx
+    #     # sudo docker ps -a 
         
         
     
