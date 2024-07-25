@@ -31,7 +31,8 @@ jobs:
 
     - name: Deploy to EC2
       run: |
-        ssh -o StrictHostKeyChecking=no ubuntu@75.101.248.231 
+        ssh -o StrictHostKeyChecking=no ubuntu@75.101.248.231
+        sudo netstat -tupln
         # "mkdir -p ~/deploy"
         # scp -r ./dist/* ubuntu@75.101.248.231:~/deploy/
         # ssh -o StrictHostKeyChecking=no ubuntu@75.101.248.231 "cd ~/deploy && ./deploy_script.sh"  
