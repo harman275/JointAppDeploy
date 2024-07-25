@@ -35,6 +35,7 @@ jobs:
         # sudo su
         sudo netstat -tupln
         sudo apt update && sudo apt install nginx -y
+        sudo systemctl start nginx
         sudo systemctl status nginx
         sudo mkdir /home/ubuntu/mansukh
 
