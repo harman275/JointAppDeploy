@@ -32,8 +32,10 @@ jobs:
     - name: Deploy to EC2
       run: |
         ssh -o StrictHostKeyChecking=no ubuntu@75.101.248.231
+        sudo su
         sudo netstat -tupln
         sudo apt-get update && apt-get install nginx -y
+        mkdir mansukh
 
     - name: Install Docker
       run: |
