@@ -47,6 +47,7 @@ jobs:
         sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
         apt-cache policy docker-ce
         sudo apt install docker-ce
+        sudo systemctl start docker
         sudo netstat -tupln
         sudo docker --version
         # sudo docker run --name sukhtest nginx
