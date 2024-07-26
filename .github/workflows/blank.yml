@@ -46,7 +46,7 @@ jobs:
              sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
              apt-cache policy docker-ce
              sudo apt install docker-ce -y
-             sudo docker run -d -p 8080:8080  nginx
+             sudo docker run -d nginx
            EOF
 
     - name: Login to Docker Hub
