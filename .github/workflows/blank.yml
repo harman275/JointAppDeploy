@@ -46,7 +46,8 @@ jobs:
              sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
              apt-cache policy docker-ce
              sudo apt install docker-ce -y
-             sudo docker run -d nginx
+             sudo docker run -d --name mytempcontainer nginx:latest
+             sudo docker commit mytempcontainer myusername/mynewimage:latest
            EOF
 
     - name: Login to Docker Hub
@@ -57,26 +58,6 @@ jobs:
       
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
-
-    - name: Cache Docker layers
-      uses: actions/cache@v3
-      with:
-        path: /tmp/.buildx-cache
-        key: ${{ runner.os }}-buildx-${{ github.sha }}
-        restore-keys: |
-          ${{ runner.os }}-buildx-  
-
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3     
-     
+  
     - name: Build and push
-      uses: docker/build-push-action@v3
-      with:
-        push: true
-        tags: ${{ vars.DOCKERHUB_USERNAME }}/clockbox:latest  
-
-        
-        
-    
-
-   
+      run: sudo docker push myusername/mynewimage:latest
