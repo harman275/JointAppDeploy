@@ -52,8 +52,8 @@ jobs:
              sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
              apt-cache policy docker-ce
              sudo apt install docker-ce -y
-             sudo docker run -d --name mytempcontainer2 nginx:latest
-             sudo docker commit mytempcontainer2 mansukhsingh1/mynewimage:latest
+             sudo docker run -d --name mytempcontainer3 nginx:latest
+             sudo docker commit mytempcontainer3 mansukhsingh1/mynewimage:latest
              sudo docker login registry-1.docker.io -u mansukhsingh1
              sudo docker push mansukhsingh1/mynewimage:latest
            EOF
