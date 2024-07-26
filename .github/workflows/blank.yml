@@ -54,7 +54,7 @@ jobs:
              sudo apt install docker-ce -y
              sudo docker run -d --name mytempcontainer6 nginx:latest
              sudo docker commit mytempcontainer6 mansukhsingh1/testimages:latest
-             echo $DOCKER_TOKEN | sudo docker login -u $DOCKERHUB_USERNAME --password-stdin
+             echo $DOCKERHUB_TOKEN | sudo docker login -u $DOCKERHUB_USERNAME --password-stdin
              sudo docker tag mansukhsingh1/testimages:latest mansukhsingh1/testimages:latest
              sudo docker push mansukhsingh1/testimages:latest
            EOF
