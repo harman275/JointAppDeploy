@@ -29,12 +29,6 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-    # - name: Login to Docker Hub
-    #   uses: docker/login-action@v3
-    #   with:
-    #     username: ${{ vars.DOCKERHUB_USERNAME }}
-    #     password: ${{ secrets.DOCKERHUB_TOKEN }}
-
     - name: Deploy to EC2
       run: |
            # Save the private key to a file
@@ -46,25 +40,19 @@ jobs:
 
            # Execute commands on the EC2 instance
            ssh -i id_rsa ubuntu@${{ secrets.hostip }} << 'EOF'
-             sudo apt update && sudo apt install nginx -y
              sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
              curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
              sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
              apt-cache policy docker-ce
              sudo apt install docker-ce -y
              sudo docker run -d --name mytempcontainer7 nginx:latest
+             sudo docker exec -it mytempcontainer7 sh
+             sudo mkdir mansukh
              sudo docker commit mytempcontainer7 mansukhsingh1/testimages:latest
              sudo docker login registry-1.docker.io -u mansukhsingh1
-             # echo $DOCKER_TOKEN | sudo docker login -u $DOCKERHUB_USERNAME --password-stdin
              echo "${{ secrets.DOCKER_TOKEN }}" | sudo docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
              sudo docker tag mansukhsingh1/testimages:latest mansukhsingh1/testimages:latest
              sudo docker push mansukhsingh1/testimages:latest
            EOF
 
 
-      
-    # - name: Set up Docker Buildx
-    #   uses: docker/setup-buildx-action@v3
-  
-    # - name: Build and push
-    #   run: sudo docker push myusername/mynewimage:latest
