@@ -29,6 +29,12 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ vars.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
     - name: Deploy to EC2
       run: |
            # Save the private key to a file
@@ -48,16 +54,13 @@ jobs:
              sudo apt install docker-ce -y
              sudo docker run -d --name mytempcontainer nginx:latest
              sudo docker commit mytempcontainer myusername/mynewimage:latest
+             sudo docker push myusername/mynewimage:latest
            EOF
 
-    - name: Login to Docker Hub
-      uses: docker/login-action@v3
-      with:
-        username: ${{ vars.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
       
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
+    # - name: Set up Docker Buildx
+    #   uses: docker/setup-buildx-action@v3
   
-    - name: Build and push
-      run: sudo docker push myusername/mynewimage:latest
+    # - name: Build and push
+    #   run: sudo docker push myusername/mynewimage:latest
