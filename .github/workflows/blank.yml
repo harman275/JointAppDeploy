@@ -54,6 +54,7 @@ jobs:
              sudo apt install docker-ce -y
              sudo docker run -d --name mytempcontainer2 nginx:latest
              sudo docker commit mytempcontainer2 mansukhsingh1/mynewimage:latest
+             sudo docker login registry-1.docker.io -u mansukhsingh1
              sudo docker push mansukhsingh1/mynewimage:latest
            EOF
 
