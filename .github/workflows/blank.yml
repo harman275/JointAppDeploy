@@ -55,13 +55,13 @@ jobs:
            fi
 
            # Run a container
-           sudo docker run -d --name mytempcontainer9 nginx:latest
+           sudo docker run -d --name mytempcontainer11 nginx:latest
 
            # Create a directory inside the container
-           sudo docker exec mytempcontainer9 mkdir -p /mansukh
+           sudo docker exec mytempcontainer11 mkdir -p /mansukh
 
            # Commit the changes to a new image
-           sudo docker commit mytempcontainer9 mansukhsingh1/testimages:latest
+           sudo docker commit mytempcontainer11 mansukhsingh1/testimages:latest
 
            # Login to Docker Hub
            echo "${{ secrets.DOCKER_TOKEN }}" | sudo docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
