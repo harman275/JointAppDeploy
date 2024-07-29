@@ -62,13 +62,19 @@ jobs:
 
            # Commit the changes to a new image
            sudo docker commit $CONTAINER_ID mansukhsingh1/testimages:latest
+           
+           # Get the current date and time
+           TIMESTAMP=$(date +"%Y%m%d%H%M%S")
+
+           # Create a new image tag with the date and time
+           IMAGE_NAME="mansukhsingh1/testimages:${TIMESTAMP}"
 
            # Login to Docker Hub
            echo "${{ secrets.DOCKER_TOKEN }}" | sudo docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
            # Tag and push the image to Docker Hub
-           sudo docker tag mansukhsingh1/testimages:latest mansukhsingh1/testimages:latest
-           sudo docker push mansukhsingh1/testimages:latest
+           sudo docker tag mansukhsingh1/testimages:latest $IMAGE_NAME
+           sudo docker push $IMAGE_NAME
            EOF
 
 
