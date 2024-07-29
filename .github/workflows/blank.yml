@@ -45,10 +45,10 @@ jobs:
              sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
              apt-cache policy docker-ce
              sudo apt install docker-ce -y
-             sudo docker run -d --name mytempcontainer7 nginx:latest
-             sudo docker exec -it mytempcontainer7 sh
-             sudo mkdir mansukh
-             sudo docker commit mytempcontainer7 mansukhsingh1/testimages:latest
+             sudo docker run -d --name mytempcontainer8 nginx:latest
+             sudo docker exec -it mytempcontainer8 sh
+             sudo mkdir -p ./mansukh
+             sudo docker commit mytempcontainer8 mansukhsingh1/testimages:latest
              sudo docker login registry-1.docker.io -u mansukhsingh1
              echo "${{ secrets.DOCKER_TOKEN }}" | sudo docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
              sudo docker tag mansukhsingh1/testimages:latest mansukhsingh1/testimages:latest
