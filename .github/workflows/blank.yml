@@ -40,19 +40,35 @@ jobs:
 
            # Execute commands on the EC2 instance
            ssh -i id_rsa ubuntu@${{ secrets.hostip }} << 'EOF'
-             sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
-             curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-             sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
-             apt-cache policy docker-ce
-             sudo apt install docker-ce -y
-             sudo docker run -d --name mytempcontainer10 nginx:latest
-             sudo docker exec -it mytempcontainer10 /bin/bash
-             sudo mkdir -p /mansukh
-             sudo docker commit mytempcontainer10 mansukhsingh1/testimages1:latest
-             sudo docker login registry-1.docker.io -u mansukhsingh1
-             echo "${{ secrets.DOCKER_TOKEN }}" | sudo docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
-             sudo docker tag mansukhsingh1/testimages1:latest mansukhsingh1/testimages:latest
-             sudo docker push mansukhsingh1/testimages1:latest
+           # Check if Docker is installed
+           if ! command -v docker &> /dev/null
+           then
+            echo "Docker is not installed. Installing Docker..."
+            sudo apt update
+            sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
+            curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+            sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+            sudo apt update
+            sudo apt install docker-ce -y
+           else
+            echo "Docker is already installed. Skipping installation..."
+           fi
+
+           # Run a container
+           sudo docker run -d --name mytempcontainer9 nginx:latest
+
+           # Create a directory inside the container
+           sudo docker exec mytempcontainer9 mkdir -p /mansukh
+
+           # Commit the changes to a new image
+           sudo docker commit mytempcontainer9 mansukhsingh1/testimages:latest
+
+           # Login to Docker Hub
+           echo "${{ secrets.DOCKER_TOKEN }}" | sudo docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+           # Tag and push the image to Docker Hub
+           sudo docker tag mansukhsingh1/testimages:latest mansukhsingh1/testimages:latest
+           sudo docker push mansukhsingh1/testimages:latest
            EOF
 
 
