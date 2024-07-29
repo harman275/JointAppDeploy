@@ -64,7 +64,7 @@ jobs:
            sudo docker commit $CONTAINER_ID mansukhsingh1/testimages:latest
            
            # Get the current date and time
-           TIMESTAMP=$(date +"%Y%m%d%H%M%S")
+           TIMESTAMP=$(date +"%m%d%H%M%S")
 
            # Create a new image tag with the date and time
            IMAGE_NAME="mansukhsingh1/testimages:${TIMESTAMP}"
