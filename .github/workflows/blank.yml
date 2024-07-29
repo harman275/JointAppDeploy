@@ -73,7 +73,7 @@ jobs:
            echo "${{ secrets.DOCKER_TOKEN }}" | sudo docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
            # Tag and push the image to Docker Hub
-           sudo docker tag mansukhsingh1/testimages:$IMAGE_NAME
+           sudo docker tag mansukhsingh1/testimages:latest $IMAGE_NAME
            sudo docker push $IMAGE_NAME
            EOF
 
