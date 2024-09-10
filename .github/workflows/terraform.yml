@@ -37,6 +37,6 @@ jobs:
           if: steps.plan.outcome == 'failure'
           run: exit 1
 
-        # - name: Terraform apply
-        #   if: github.event_name == 'pull_request' && github.ref == 'refs/heads/main'
-        #   run: terraform apply
+        - name: Terraform apply
+          if: github.event_name == 'pull_request' && github.ref == 'refs/heads/main'
+          run: terraform apply --auto-approve
