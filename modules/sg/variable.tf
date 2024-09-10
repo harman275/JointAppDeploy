@@ -4,5 +4,5 @@ variable "vpc_id" {
 }
 variable "sgname" {
     type = string
-  
+    default = "default"
 }
