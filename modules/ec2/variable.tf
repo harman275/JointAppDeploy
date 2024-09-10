@@ -15,6 +15,6 @@ variable "key_name" {
 }
 variable "security_groups" {
   type = string
-  default = "sgfortesting"
+  default = "testsg"
   
 }
