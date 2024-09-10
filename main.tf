@@ -18,6 +18,4 @@ module "sg" {
   source = "./modules/sg"
   sgname = "testsg"
   vpc_id      = data.aws_vpc.existing_vpc.id
-
-  
 }
