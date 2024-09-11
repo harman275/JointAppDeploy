@@ -1,0 +1,42 @@
+name: "Terraform-Deploy-on-aws" 
+
+on: 
+  push: 
+    branches:
+       - main
+
+jobs: 
+  terraform:
+     name: "Terraform" 
+     runs-on: ubuntu-latest
+     env: 
+       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID}}
+       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
+       AWS_REGION: "us-east-1"
+
+
+     steps:
+        - name: checkout
+          uses: actions/checkout@v3
+
+        - name: setup terraform 
+          uses: hashicorp/setup-terraform@v2
+          with:
+            terraform_version: 1.7.1
+
+        - name: terraform init
+          id: init
+          run: terraform init
+
+        - name: terraform plan
+          id: plan
+          run: terraform plan
+          continue-on-error: true
+
+        - name: Terraform plan status
+          if: steps.plan.outcome == 'failure'
+          run: exit 1
+
+        - name: Terraform apply
+
+          run: terraform apply --auto-approve
