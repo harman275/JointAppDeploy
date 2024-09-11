@@ -11,3 +11,18 @@ variable "bucketname" {
   type    = string
   default = "my-tf-test-bucket"
 }
+
+variable "cluster_name" {
+  default = "eksclusterdemo"
+  type    = string
+}
+
+variable "instance_types" {
+  default = "t2.medium"
+  type    = string
+}
+
+variable "node_group_name" {
+  default = "eksnodegroup"
+  type    = string
+}

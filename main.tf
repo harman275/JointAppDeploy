@@ -1,21 +1,29 @@
-data "aws_key_pair" "existing_key" {
-  key_name = "testkey"
-}
-data "aws_vpc" "existing_vpc" {
+# data "aws_key_pair" "existing_key" {
+#   key_name = "testkey"
+# }
+# data "aws_vpc" "existing_vpc" {
   
-    id = "vpc-0599aed54c4b224b3" # Replace with your VPC ID
-}
+#     id = "vpc-0599aed54c4b224b3" # Replace with your VPC ID
+# }
 
-module "ec2" {
-  source        = "./modules/ec2"
-  ami           = var.ami # Replace with your preferred AMI
-  instance_type = var.instance_type
-  key_name      = data.aws_key_pair.existing_key.key_name
-  security_groups = module.sg.sgname
+# module "ec2" {
+#   source        = "./modules/ec2"
+#   ami           = var.ami # Replace with your preferred AMI
+#   instance_type = var.instance_type
+#   key_name      = data.aws_key_pair.existing_key.key_name
+#   security_groups = module.sg.sgname
 
-}
-module "sg" {
-  source = "./modules/sg"
-  sgname = "testsg"
-  vpc_id      = data.aws_vpc.existing_vpc.id
+# }
+# module "sg" {
+#   source = "./modules/sg"
+#   sgname = "testsg"
+#   vpc_id      = data.aws_vpc.existing_vpc.id
+# }
+
+module "eks"{
+    cluster_name        = var.cluster_name
+    node_group_name     = var.node_group_name
+    instance_types      = var.instance_types
+
+    source      = "./modules/eks"
 }
