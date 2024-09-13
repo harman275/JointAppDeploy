@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .form-container {
+            width: 50%;
+            margin: auto;
+            padding: 20px;
+            background-color: #f2f2f2;
+            border-radius: 10px;
+        }
+        label, input, select {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        input[type="submit"] {
+            width: auto;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>Registration Form</h2>
+        <form id="registrationForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender" required>
+                <option value="" disabled selected>Select your gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+            </select>
+
+            <div id="age-group" class="hidden">
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" min="1">
+            </div>
+
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('gender').addEventListener('change', function() {
+            if (this.value === 'other') {
+                document.getElementById('age-group').classList.remove('hidden');
+            } else {
+                document.getElementById('age-group').classList.add('hidden');
+            }
+        });
+
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            // Perform validation or process form data here
+            alert("Form Submitted Successfully!");
+            window.location.href = "thankyou.html"; // Redirect to thank you page
+        });
+    </script>
+
+</body>
+</html>
